@@ -2,10 +2,10 @@
 - name: Converge
   hosts: all
   pre_tasks:
-    - name: upgrade python
+    - name: upgrade python # noqa 403
       package:
         name: python
-        state: latest # noqa 401 501
+        state: latest
     - name: create containerd folder
       file:
         path: /etc/systemd/system/containerd.service.d
