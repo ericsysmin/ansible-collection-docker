@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   pre_tasks:
-    - name: upgrade python
+    - name: upgrade python # noqa 403
       package:
         name: python
         state: latest

@@ -35,7 +35,7 @@
   rescue:
     - name: Docker | CE | APT | Ensure curl is present (systems without SNI).
       package: name=curl
-    - name: Docker | CE | APT | Download GPG key (systems without SNI).
+    - name: Docker | CE | APT | Download GPG key (systems without SNI). # noqa 303
       shell: "curl -sSL {{ docker_ce_gpg_key }} | sudo apt-key add -"
 
 - name: Docker | CE | APT | Configure Docker repository

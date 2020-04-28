@@ -14,9 +14,9 @@
   rescue:
     - name: Docker | CE | YUM | Ensure curl is present (systems without SNI).
       package: name=curl
-    - name: Docker | CE | YUM | Download GPG key (systems without SNI).
+    - name: Docker | CE | YUM | Download GPG key (systems without SNI). # noqa 303 305
       shell: "curl -sSL {{ docker_ce_gpg_key }} -o /tmp/docker-gpg"
-    - name: Docker | CE | YUM | Add Docker GPG key (systems without SNI).
+    - name: Docker | CE | YUM | Add Docker GPG key (systems without SNI). # noqa 303 305
       shell: rpm --import /tmp/docker-gpg
     - name: Docker | CE | YUM | Remove docker-gpg from tmp folder
       file: path=/tmp/docker-gpg state=absent
@@ -37,7 +37,7 @@
       until: task_result is success
       retries: 10
       delay: 2
-    - name: Docker | CE | YUM | Deploy repository (systems without SNI)
+    - name: Docker | CE | YUM | Deploy repository (systems without SNI) # noqa 305
       shell: "yum-config-manager --add-repo {{ docker_ce_repo_file_url }}"
       args:
         creates: /etc/yum.repos.d/docker-ce.repo
