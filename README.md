@@ -1,5 +1,4 @@
-# Ansible Collection
-# ericsysmin.docker
+# Ansible Collection: ericsysmin.docker
 
 [![Build Status](https://travis-ci.com/ericsysmin/ansible-collection-docker.svg?branch=master)](https://travis-ci.com/ericsysmin/ansible-collection-docker)
 
