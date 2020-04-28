@@ -1,6 +1,6 @@
 # avinetworks.docker
 
-[![Build Status](https://travis-ci.org/avinetworks/ansible-role-docker.svg?branch=master)](https://travis-ci.org/avinetworks/ansible-role-docker)
+[![Build Status](https://travis-ci.com/ericsysmin/ansible-collection-docker.svg?branch=master)](https://travis-ci.com/ericsysmin/ansible-collection-docker)
 
 ## Role Summary
 
@@ -108,7 +108,7 @@ Install docker to the hosts with basic defaults. This does not install devicemap
 ```yaml
 - hosts: servers
   roles:
-    - role: avinetworks.docker
+    - role: ericsysmin.docker.docker
 ```
 
 Install docker with devicemapper. Please note, this will create a new LVM on /dev/sda3, please do not use a block device already in use. This is the recommended production deployment on RHEL/CentOS/Fedora systems.
@@ -116,7 +116,7 @@ Install docker with devicemapper. Please note, this will create a new LVM on /de
 ```yaml
 - hosts: servers
   roles:
-    - role: avinetworks.docker
+    - role: ericsysmin.docker.docker
       docker_storage_driver: devicemapper
       docker_block_device: /dev/sda3
 ```
@@ -126,7 +126,7 @@ Install docker with AUFS. This is recommended for production deployment on Ubunt
 ```yaml
 - hosts: servers
   roles:
-    - role: avinetworks.docker
+    - role: ericsysmin.docker.docker
       docker_storage_driver: aufs
 ```
 
@@ -138,4 +138,4 @@ Apache 2.0
 
 ## Author Information
 
-[Avi Networks](http://avinetworks.com)
+[ericsysmin](https://ericsysmin.com)
