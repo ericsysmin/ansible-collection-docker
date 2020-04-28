@@ -11,7 +11,7 @@
   retries: 10
   delay: 2
 
-- name: Docker | EE | YUM | Deploy repository
+- name: Docker | EE | YUM | Deploy repository # noqa 305
   shell: "yum-config-manager --add-repo {{ docker_ee_url }}/docker-ee.repo"
   args:
     creates: /etc/yum.repos.d/docker-ee.repo

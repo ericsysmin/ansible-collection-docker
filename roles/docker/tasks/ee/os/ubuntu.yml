@@ -19,14 +19,14 @@
   delay: 2
 
 # Check and see if the GPG key already exists on the host
-- name: Docker | CE | APT | Check GPG Key
+- name: Docker | CE | APT | Check GPG Key # noqa 305
   shell: gpg -k {{ docker_apt_key_id }}
   failed_when: false
   changed_when: false
   register: docker_gpg_exists
 
 # If the GPG key doesn't exist, then add the new GPG key
-- name: Docker | CE | APT | Add Docker GPG Key
+- name: Docker | CE | APT | Add Docker GPG Key # noqa 303 306
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   failed_when: false
   changed_when: false
