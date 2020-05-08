@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   role_name: docker
-  author: Avi Networks
+  author: ericsymsin
   description: Ansible role that installs Docker
   company: Avi Networks
-  issue_tracker_url: https://github.com/avinetworks/ansible-role-docker/issues
+  issue_tracker_url: https://github.com/ericsysmin/ansible-collection-docker/issues
   license: Apache-2.0
   min_ansible_version: 2.4.0
   github_branch: master
