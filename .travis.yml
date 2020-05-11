@@ -13,7 +13,7 @@ env:
     - COLLECTION_NAME: docker
   matrix:
     - MOLECULE_DISTRO=centos-7 MOLECULE_COMMAND=/usr/sbin/init
-    - MOLECULE_DISTRO=centos-8 MOLECULE_COMMAND=/usr/sbin/init
+    #  - MOLECULE_DISTRO=centos-8 MOLECULE_COMMAND=/usr/sbin/init
     - MOLECULE_DISTRO=oraclelinux-7 MOLECULE_COMMAND=/usr/sbin/init
     - MOLECULE_DISTRO=oraclelinux-8 MOLECULE_COMMAND=/usr/sbin/init
     #  - MOLECULE_DISTRO=fedora-32 MOLECULE_COMMAND=/usr/sbin/init
