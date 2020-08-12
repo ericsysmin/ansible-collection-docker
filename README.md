@@ -130,8 +130,6 @@ Install docker with AUFS. This is recommended for production deployment on Ubunt
       docker_storage_driver: aufs
 ```
 
-Please see [examples/](examples/) folder for more examples.
-
 ## License
 
 Apache 2.0
