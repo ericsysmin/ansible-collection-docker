@@ -42,7 +42,7 @@
   vars:
     params:
       files:
-        - "{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
         - default.yml
       paths:
         - 'vars/os'
