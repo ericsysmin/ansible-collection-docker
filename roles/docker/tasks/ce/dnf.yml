@@ -59,8 +59,8 @@
 - name: Docker | CE | DNF | Perform specific os tasks
   ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
-    - os/{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml
-    - os/default.yml
+    - ce/os/{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml
+    - ce/os/default.yml
 
 - name: Docker | CE | DNF | Install docker-ce
   ansible.builtin.dnf:
