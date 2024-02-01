@@ -57,4 +57,4 @@ jobs:
           ansible --version &&
           MOLECULE_COMMAND=${{ matrix.molecule_distro.command }}
           MOLECULE_DISTRO=${{ matrix.molecule_distro.distro }}
-          molecule --debug test -s ${{ matrix.collection_role }} -vvv
+          molecule --debug test -s ${{ matrix.collection_role }}
