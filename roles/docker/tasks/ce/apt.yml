@@ -25,9 +25,8 @@
     - name: Docker | CE | APT | Ensure curl is present (systems without SNI).
       ansible.builtin.package:
         name: curl
-    - name: Docker | CE | APT | Download GPG key (systems without SNI). # noqa command-instead-of-module no-changed-when risky-shell-pipe
+    - name: Docker | CE | APT | Download GPG key (systems without SNI).  #  noqa command-instead-of-module
       ansible.builtin.shell: curl -sSL {{ docker_ce_gpg_key }} | sudo apt-key add -
-
 - name: Docker | CE | APT | Configure Docker repository
   ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repo_url }}"
@@ -38,14 +37,10 @@
   when: docker_channel == "edge"
 
 - name: Docker | CE | APT | Perform specific os tasks
-  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
-  vars:
-    params:
-      files:
-        - "{{ ansible_distribution | lower }}.yml"
-        - default.yml
-      paths:
-        - 'vars/os'
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_first_found:
+    - ce/os/{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml
+    - ce/os/default.yml
 
 - name: Docker | CE | APT | Install docker-ce
   ansible.builtin.apt:
