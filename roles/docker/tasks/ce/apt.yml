@@ -38,10 +38,14 @@
   when: docker_channel == "edge"
 
 - name: Docker | CE | APT | Perform specific os tasks
-  ansible.builtin.include_tasks: "{{ item }}"
-  with_first_found:
-    - os/{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml
-    - os/default.yml
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml"
+        - default.yml
+      paths:
+        - 'vars/os'
 
 - name: Docker | CE | APT | Install docker-ce
   ansible.builtin.apt:
