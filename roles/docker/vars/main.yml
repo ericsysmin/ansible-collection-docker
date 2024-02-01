@@ -1,0 +1,11 @@
+---
+# code: language=ansible
+
+docker_architecture_mapping:
+  x86_64: amd64
+  ppc64le: ppc64el
+  s390x: s390x
+  armv7l: armhf
+  aarch64: arm64
+
+docker_architecture: "{{ docker_architecture_mapping[ansible_architecture] }}"

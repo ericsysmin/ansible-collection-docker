@@ -1,4 +1,5 @@
 ---
+# code: language=ansible
 # Fedora vars file for docker
 
 docker_ce_repo_url: https://download.docker.com/linux/fedora

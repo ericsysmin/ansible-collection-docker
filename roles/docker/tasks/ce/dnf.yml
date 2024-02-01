@@ -1,55 +1,54 @@
 ---
-# - name: Docker | CE | DNF | Remove older Docker installations
-#   dnf: name={{ item }} state=absent
-#   with_items:
-#     - docker
-#     - docker-common
-#     - docker-engine
+# code: language=ansible
 
 - name: Docker | CE | DNF | Add repository key
   block:
     - name: Docker | CE | DNF | Add repository key
-      rpm_key:
+      ansible.builtin.rpm_key:
         key: "{{ docker_ce_gpg_key }}"
   rescue:
     - name: Docker | CE | DNF | Ensure curl is present (systems without SNI).
-      package: name=curl
+      ansible.builtin.package:
+        name: curl
       register: task_result
       until: task_result is success
       retries: 10
       delay: 2
-    - name: Docker | CE | DNF | Download GPG key (systems without SNI). # noqa 303 305
-      shell: "curl -sSL {{ docker_ce_gpg_key }} -o /tmp/docker-gpg"
-    - name: Docker | CE | DNF | Add Docker GPG key (systems without SNI). # noqa 303 305
-      shell: rpm --import /tmp/docker-gpg
+    - name: Docker | CE | DNF | Download GPG key (systems without SNI).  # noqa command-instead-of-module no-changed-when
+      ansible.builtin.command: curl -sSL {{ docker_ce_gpg_key }} -o /tmp/docker-gpg
+    - name: Docker | CE | DNF | Add Docker GPG key (systems without SNI).  # noqa command-instead-of-module no-changed-when
+      ansible.builtin.command: rpm --import /tmp/docker-gpg
     - name: Docker | CE | DNF | Remove docker-gpg from tmp folder
-      file: path=/tmp/docker-gpg state=absent
+      ansible.builtin.file:
+        path: /tmp/docker-gpg
+        state: absent
 
 - name: Docker | CE | DNF | Deploy repository
   block:
     - name: Docker | CE | DNF | Deploy repository
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ docker_ce_repo_file_url }}"
         dest: /etc/yum.repos.d/docker-ce.repo
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
   rescue:
     - name: Docker | CE | DNF | Install dnf-utils (systems without SNI)
-      dnf: name=dnf-plugins-core
+      ansible.builtin.dnf:
+        name: dnf-plugins-core
       register: task_result
       until: task_result is success
       retries: 10
       delay: 2
-    - name: Docker | CE | DNF | Deploy repository (systems without SNI) # noqa 305
-      shell: "dnf config-manager --add-repo {{ docker_ce_repo_file_url }}"
+    - name: Docker | CE | DNF | Deploy repository (systems without SNI) # noqa command-instead-of-module
+      ansible.builtin.command: dnf config-manager --add-repo {{ docker_ce_repo_file_url }}
       args:
         creates: /etc/yum.repos.d/docker-ce.repo
 
 - name: Docker | CE | DNF | Enable edge repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: docker-ce-edge
-    description: "Docker CE Edge - $basearch"
+    description: Docker CE Edge - $basearch
     baseurl: "{{ docker_ce_edge_repo_url }}"
     gpgcheck: true
     gpgkey: "{{ docker_ce_gpg_key }}"
@@ -58,13 +57,13 @@
   when: docker_channel == "edge"
 
 - name: Docker | CE | DNF | Perform specific os tasks
-  include_tasks: "{{ item }}"
+  ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
-    - os/{{ ansible_distribution.split(' ', 1)[0]|lower }}.yml
+    - os/{{ ansible_distribution.split(' ', 1)[0] | lower }}.yml
     - os/default.yml
 
 - name: Docker | CE | DNF | Install docker-ce
-  dnf:
+  ansible.builtin.dnf:
     name: docker-ce
     state: present
   notify: Docker | Restart Docker

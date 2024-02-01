@@ -1,4 +1,5 @@
 ---
+# code: language=ansible
 # defaults file for docker
 docker_service_enabled: true
 docker_config: {}

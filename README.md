@@ -6,21 +6,21 @@
 
 This role provides the following:
 
--   Installation of Docker following Docker-Engine install procedures as documented by Docker.
--   It will manage kernel versions as well, verifying the that the correct kernel for Docker support is installed.
+- Installation of Docker following Docker-Engine install procedures as documented by Docker.
+- It will manage kernel versions as well, verifying the that the correct kernel for Docker support is installed.
 
 Supports the following Operating Systems:
 
--   CentOS 7
--   RedHat 7
--   Fedora 24
--   Fedora 23
--   Fedora 26
--   Fedora 27
--   Fedora 29
--   OracleLinux 7
--   Ubuntu 14.04
--   Ubuntu 16.04
+- CentOS 7
+- RedHat 7
+- Fedora 24
+- Fedora 23
+- Fedora 26
+- Fedora 27
+- Fedora 29
+- OracleLinux 7
+- Ubuntu 14.04
+- Ubuntu 16.04
 
 ## Requirements
 
