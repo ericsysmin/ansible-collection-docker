@@ -1,0 +1,26 @@
+---
+# code: language=ansible
+# defaults file for docker_systemd_service
+
+docker_systemd_service_description: "{{ docker_systemd_service_name }}"
+docker_systemd_service_enabled: true
+docker_systemd_service_start: true
+docker_systemd_service_exec_start_pre: "/bin/rm -f %t/%n.ctr-id"
+docker_systemd_service_exec_start: |
+  /usr/bin/docker run \
+    --name={{ docker_systemd_service_container_name }} \
+    {% if docker_systemd_service_hostname %}
+    --hostname={{ docker_systemd_service_hostname }} \
+    {% endif %}
+    --cidfile=%t/%n.ctr-id \
+    --rm \
+    --privileged \
+    {% for p in docker_systemd_service_ports %}
+    -p {{ p }} \
+    {% endfor %}
+    {% for v in docker_systemd_service_volumes %}
+    -v {{ v }} \
+    {% endfor %}
+    {{ docker_systemd_service_image }}
+docker_systemd_service_exec_stop: /usr/bin/docker stop --ignore -t 10 --cidfile=%t/%n.ctr-id
+docker_systemd_service_exec_stop_post: /usr/bin/docker rm -f --ignore -t 10 --cidfile=%t/%n.ctr-id

@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Eric Anderson
+  description: Ansible role to create a systemd service for a docker container
+  # issue_tracker_url: http://example.com/issue/tracker
+  license: MIT
+  min_ansible_version: "2.9"
+  galaxy_tags:
+    - docker
+    - systemd
+    - infrastructure
+    - system
+dependencies: []

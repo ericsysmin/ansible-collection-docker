@@ -1,0 +1,71 @@
+---
+# code: language=ansible
+argument_specs:
+  main:
+    short_description: Ansible role to create a systemd service for a docker container
+    description:
+      - Role to create a systemd service for a docker container
+      - Can also enable/disable the service to start at boot
+    author:
+      - Eric Anderson
+    options:
+      docker_systemd_service_name:
+        description: Service name for the systemd service
+        type: str
+        required: true
+      docker_systemd_service_description:
+        description:
+          - Service description for the systemd service
+        type: str
+        default: "{{ docker_systemd_service_name }}"
+      docker_systemd_service_enabled:
+        description:
+          - Enable service to run at boot.
+        type: bool
+        default: true
+      docker_systemd_service_start:
+        description:
+          - Start the service during role execution.
+        type: bool
+        default: true
+      docker_systemd_service_exec_start_pre:
+        description:
+          - Script for pre-start of the systemd service
+        type: str
+        default: /bin/rm -f %t/%n.ctr-id
+      docker_systemd_service_exec_start:
+        description:
+          - Script for the start of the systemd service
+        type: str
+        default: ""
+      docker_systemd_service_exec_stop:
+        description:
+          - Script for stop of the systemd service
+        type: str
+        default: /usr/bin/docker stop --ignore -t 10 --cidfile=%t/%n.ctr-id
+      docker_systemd_service_exec_stop_post:
+        description:
+          - Script for post stop of the systemd service
+        type: str
+        default: /usr/bin/docker rm -f --ignore -t 10 --cidfile=%t/%n.ctr-id
+      docker_systemd_service_container_name:
+        description:
+          - Name of the container to be ran
+      docker_systemd_service_image:
+        description:
+          - Docker image to be used for the container
+        type: str
+        required: true
+      docker_systemd_service_ports:
+        description:
+          - List of service ports for the docker run execution
+        type: list
+      docker_systemd_service_volumes:
+        description:
+          - List of volume mounts for the docker run execution
+        type: list
+      docker_systemd_service_hostname:
+        description:
+          - Hostname to be used by the docker container
+        type: str
+        required: false

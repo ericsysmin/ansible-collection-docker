@@ -1,0 +1,14 @@
+---
+# code: language=ansible
+# handlers file for docker_systemd_service
+
+- name: Docker systemd service | Services | Daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: "{{ docker_systemd_service_name }}"
+
+- name: Docker systemd service | Services | Restart service
+  ansible.builtin.systemd:
+    name: "{{ docker_systemd_service_name }}"
+    enabled: "{{ docker_systemd_service_enabled }}"
+    state: "{{ docker_systemd_service_start | ternary('restarted', omit) }}"

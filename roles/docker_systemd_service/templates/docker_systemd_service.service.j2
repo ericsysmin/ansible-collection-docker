@@ -1,0 +1,16 @@
+[Unit]
+Description={{ docker_systemd_service_description }}
+After=docker.service
+Wants=network-online.target docker.socket
+Requires=docker.socket
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre= {{ docker_systemd_exec_start_pre }}
+ExecStart={{ docker_systemd_service_exec_start }}
+ExecStop={{ docker_systemd_service_exec_stop }}
+ExecStopPost={{ docker_systemd_service_exec_stop_post }}
+
+[Install]
+WantedBy=multi-user.target
