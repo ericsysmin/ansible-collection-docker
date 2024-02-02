@@ -1,0 +1,16 @@
+ancestor: null
+releases:
+  1.0.0:
+    release_date: '2024-02-01'
+    changes:
+      release_summary: 1.0.0 release of the Docker role
+      major_changes:
+        - added recent versions of OS tests
+        - ensured existing role works with newer OS releases
+        - updated all tasks to meet newer ansible-lint requirements
+        - updated molecule testing
+    objects:
+      role:
+        - name: docker
+          description: Ansible role to deploy Docker CE or Docker EE
+          namespace: null

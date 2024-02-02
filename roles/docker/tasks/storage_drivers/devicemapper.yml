@@ -1,57 +1,64 @@
 ---
+# code: language=ansible
 - name: Docker | Storage Driver | devicemapper | Install LVM2
-  package: name=lvm2 state=present
+  ansible.builtin.package:
+    name: lvm2
+    state: present
   register: task_result
   until: task_result is success
   retries: 10
   delay: 2
 
 - name: Docker | Storage Driver | devicemapper | Configure logical volume group
-  lvg:
+  community.general.lvg:
     vg: docker
     pvs: "{{ docker_block_device }}"
   when: docker_block_device is defined
 
 - name: Docker | Storage Driver | devicemapper | Create thinpool volume
-  lvol:
+  community.general.lvol:
     vg: docker
     lv: thinpool
     size: 95%VG
-    opts: "--wipesignatures y"
+    opts: --wipesignatures y
   register: thinpool
   when: docker_block_device is defined
 
 - name: Docker | Storage Driver | devicemapper | Create thinpoolmeta volume
-  lvol:
+  community.general.lvol:
     vg: docker
     lv: thinpoolmeta
     size: 1%VG
-    opts: "--wipesignatures y"
+    opts: --wipesignatures y
   when: docker_block_device is defined
 
-- name: Docker | Storage Driver | devicemapper | Convert volumes to thinpool # noqa 305 503
-  shell: lvconvert -y --zero n -c 512K --thinpool docker/thinpool --poolmetadata docker/thinpoolmeta
+- name: Docker | Storage Driver | devicemapper | Convert volumes to thinpool # noqa no-handler no-changed-when
+  ansible.builtin.command: lvconvert -y --zero n -c 512K --thinpool docker/thinpool --poolmetadata docker/thinpoolmeta
   when: thinpool.changed
 
 - name: Docker | Storage Driver | devicemapper | Configure autoextension of thin pools via 'lvm' profile
-  copy:
+  ansible.builtin.copy:
     src: docker-thinpool.profile
     dest: /etc/lvm/profile/docker-thinpool.profile
+    mode: "0644"
   register: docker_thinpool_profile
   notify: Docker | Restart Docker
   when: docker_block_device is defined
 
-- name: Docker | Storage Driver | devicemapper | Apply 'lvm' profile # noqa 305 503
-  shell: lvchange --metadataprofile docker-thinpool docker/thinpool
+- name: Docker | Storage Driver | devicemapper | Apply 'lvm' profile  # noqa no-handler no-changed-when
+  ansible.builtin.command: lvchange --metadataprofile docker-thinpool docker/thinpool
   when: docker_thinpool_profile.changed
 
 - name: Docker | Storage Driver | devicemapper | Make sure /var/lib/docker is Created
-  file: path=/var/lib/docker state=directory
+  ansible.builtin.file:
+    path: /var/lib/docker
+    state: directory
+    mode: "0755"
 
 - name: Docker | STorage Driver | devicemapper | Set the docker_storage_opts
-  set_fact:
+  ansible.builtin.set_fact:
     docker_storage_opts:
-      - "dm.thinpooldev=/dev/mapper/docker-thinpool"
-      - "dm.use_deferred_removal=true"
-      - "dm.use_deferred_deletion=true"
+      - dm.thinpooldev=/dev/mapper/docker-thinpool
+      - dm.use_deferred_removal=true
+      - dm.use_deferred_deletion=true
   when: docker_storage_opts is undefined

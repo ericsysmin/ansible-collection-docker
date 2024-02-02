@@ -1,32 +1,12 @@
 ---
+# code: language=ansible
 galaxy_info:
   role_name: docker
   author: ericsymsin
-  description: Ansible role that installs Docker
-  company: Avi Networks
+  description: Ansible role that installs and configures Docker
   issue_tracker_url: https://github.com/ericsysmin/ansible-collection-docker/issues
-  license: Apache-2.0
-  min_ansible_version: 2.4.0
-  github_branch: master
-  platforms:
-    - name: EL
-      versions:
-        - 7
-        - 8
-    - name: Fedora
-      versions:
-        - 27
-        - 28
-    - name: Ubuntu
-      versions:
-        - trusty
-        - xenial
-        - bionic
-    - name: Debian
-      versions:
-        - jessie
-        - stretch
-        - wheezy
+  license: MIT
+  min_ansible_version: "2.9.0"
   galaxy_tags:
     - docker
     - ubuntu

@@ -1,5 +1,6 @@
 ---
+# code: language=ansible
 - name: Docker | Storage Driver | overlay | Enable overlay driver
-  modprobe:
+  community.general.modprobe:
     name: overlay
     state: present

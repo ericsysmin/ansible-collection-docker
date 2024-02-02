@@ -1,19 +1,21 @@
 ---
+# code: language=ansible
 - name: Docker | Deploy Config | Make sure /etc/docker exists
-  file: path=/etc/docker state=directory
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: "0755"
 
-# - name: Docker | Deploy Config | Deploy /etc/docker/daemon.json
-#   template: src=docker_config.j2 dest=/etc/docker/daemon.json
-#   notify: Docker | Restart Docker
-
-#### THESE ALLOW NOT USING TEMPLATE FILE ###
 - name: Docker | Deploy Config | Set the Docker configuration
-  set_fact:
-    docker_config: "{{ docker_config|combine({ item.key: item.value }) }}"
+  ansible.builtin.set_fact:
+    docker_config: "{{ docker_config | combine({item.key: item.value}) }}"
   when: item.value | string | length > 0
   with_dict: "{{ docker_options }}"
 
 - name: Docker | Deploy Config | Deploy /etc/docker/daemon.json
-  copy: content="{{ docker_config | to_nice_json }}\n" dest=/etc/docker/daemon.json
+  ansible.builtin.copy:
+    content: "{{ docker_config | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: "0644"
   when: docker_config != {}
   notify: Docker | Restart Docker
