@@ -1,14 +1,17 @@
-## Installing Docker via Ansible
-### Default Docker Install
-```
+# Installing Docker via Ansible
+
+## Default Docker Install
+
+```yaml
 ---
 - hosts: all
   roles:
     - role: avinetworks.docker
 ```
 
-### Install Docker w/devicemapper
-```
+## Install Docker w/devicemapper
+
+```yaml
 ---
 - hosts: all
   roles:
@@ -17,8 +20,9 @@
       docker_block_device: /dev/sda3
 ```
 
-### Install Docker w/HTTP Proxy Support
-```
+## Install Docker w/HTTP Proxy Support
+
+```yaml
 ---
 - hosts: all
   roles:
@@ -27,8 +31,9 @@
       docker_https_proxy: https://proxy.example.com:443/
 ```
 
-### Install Docker w/HTTP Proxy Support & without proxy on internal sites
-```
+## Install Docker w/HTTP Proxy Support & without proxy on internal sites
+
+```yaml
 ---
 - hosts: all
   roles:
@@ -38,8 +43,9 @@
       docker_no_proxy_params: "localhost,127.0.0.0/8,docker-registry.example.com"
 ```
 
-### Install Docker and customize the storage directory of images and containers
-```
+## Install Docker and customize the storage directory of images and containers
+
+```yaml
 ---
 - hosts: all
   roles:
@@ -47,8 +53,9 @@
       docker_graph: /home/docker
 ```
 
-### Install/Upgrade Docker. Avoid container downtime during the upgrade of a Docker
-```
+## Install/Upgrade Docker. Avoid container downtime during the upgrade of a Docker
+
+```yaml
 ---
 - hosts: all
   roles:

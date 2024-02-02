@@ -1,0 +1,23 @@
+objects:
+  role:
+    docker:
+      description: Ansible role to install and configure Docker
+      name: docker
+      version_added: null
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  filter: {}
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module: {}
+  netconf: {}
+  shell: {}
+  strategy: {}
+  test: {}
+  vars: {}
+version: 1.0.0

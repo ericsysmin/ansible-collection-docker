@@ -3,7 +3,7 @@
 galaxy_info:
   role_name: docker
   author: ericsymsin
-  description: Ansible role that installs Docker
+  description: Ansible role that installs and configures Docker
   issue_tracker_url: https://github.com/ericsysmin/ansible-collection-docker/issues
   license: MIT
   min_ansible_version: "2.9.0"
