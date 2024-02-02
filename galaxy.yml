@@ -6,7 +6,7 @@ readme: README.md
 authors:
   - Eric Anderson <eric.sysmin@gmail.com>
 description: Docker collection
-license_file: LICENSE
+license: MIT
 tags:
   - docker
   - infrastructure
