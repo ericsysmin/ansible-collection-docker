@@ -18,3 +18,4 @@ dependencies: {
 repository: https://github.com/ericsysmin/ansible-collection-docker
 homepage: https://github.com/ericsysmin/ansible-collection-docker
 issues: https://github.com/ericsysmin/ansible-collection-docker/issues
+documentation: https://ericsysmin.github.io/ansible-collection-docker/
