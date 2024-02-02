@@ -25,8 +25,8 @@
     - name: Docker | CE | APT | Ensure curl is present (systems without SNI).
       ansible.builtin.package:
         name: curl
-    - name: Docker | CE | APT | Download GPG key (systems without SNI).  #  noqa command-instead-of-module
-      ansible.builtin.shell: curl -sSL {{ docker_ce_gpg_key }} | sudo apt-key add -
+    - name: Docker | CE | APT | Download GPG key (systems without SNI).  # noqa command-instead-of-module no-changed-when
+      ansible.builtin.command: curl -sSL {{ docker_ce_gpg_key }} | sudo apt-key add -
 - name: Docker | CE | APT | Configure Docker repository
   ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repo_url }}"
@@ -44,7 +44,12 @@
 
 - name: Docker | CE | APT | Install docker-ce
   ansible.builtin.apt:
-    name: docker-ce
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
   notify: Docker | Restart Docker
   register: task_result
